@@ -19,7 +19,7 @@ public class UserController {
         u.setName("lisi");
         u.setAge(10);
         u.setPwd("1234567");
-        u.setBrithday(new Date());
+        u.setBirthday(new Date());
         u.setDesc("测试");
         return u;
     }
@@ -31,7 +31,7 @@ public class UserController {
         u.setName("lisi");
         u.setAge(10);
         u.setPwd("1234567");
-        u.setBrithday(new Date());
+        u.setBirthday(new Date());
 //        u.setDesc("");
         return JSONResult.ok(u);
     }

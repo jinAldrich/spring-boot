@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<script src="@{/static/hello.js}"></script>-->
+</head>
+<body>
+
+<div>
+    用户名：<input th:id="${user.name}" th:name="${user.name}" th:value="${user.name}"> </br>
+    年龄：<input th:value="${user.age}"> </br>
+    生日：<input th:value="${user.birthday}"> </br>
+    生日：<input th:value="${#dates.format(user.birthday, 'yyyy-MM-dd')}"> </br>
+</div>
+
+<br/>
+
+<div th:object="${user}">
+    用户名：<input th:id="*{name}" th:name="*{name}" th:value="*{name}"> </br>
+    年龄：<input th:value="*{age}"> </br>
+    生日：<input th:value="*{#dates.format(birthday, 'yyyy-MM-dd hh:mm:ss')}"> </br>
+</div>
+
+<br/>
+<!-- text 和 utext-->
+text与utext: <br/>
+<span th:text="${user.name}">abc</span> <br>
+<span th:utext="${user.desc}">abc</span>
+
+<br/>
+<!-- form表单提交 -->
+<form th:action="@{/th/postform}" th:object="${user}" method="post">
+    <input type="text" th:field="*{name}">
+    <input type="submit">
+
+</form>
+
+<br/>
+<div th:if="${user.age} == 18">十八岁的天空</div>
+<div th:if="${user.age} gt 18">你老了</div>
+<div th:if="${user.age} lt 18">你很年轻</div>
+<div th:if="${user.age} ge 18">大于等于</div>
+<div th:if="${user.age} le 18">小于等于</div>
+
+<br/>
+<select>
+    <option th:selected="${user.name eq 'zhangsan'}"></option>
+    <option th:selected="${user.name eq 'lisi'}"></option>
+    <option th:selected="${user.name eq 'wangwu'}"></option>
+    <option th:selected="${user.name eq 'zhaoliu'}"></option>
+    <option></option>
+    <option></option>
+    <option></option>
+</select>
+
+<br/>
+<table>
+    <tr>
+        <td>姓名</td>
+        <td>年龄</td>
+        <td>注备</td>
+        <td>生日</td>
+    </tr>
+    <tr th:each="person:${userList}">
+        <td th:text="${person.name}"></td>
+        <td th:text="${person.age}"></td>
+        <td th:text="${person.age gt 18} ? 你老了 : 你很年轻">18岁</td>
+        <td th:text="${#dates.format(person.birthday, 'yyyy-MM-dd')}"></td>
+    </tr>
+</table>
+
+<br/>
+<div th:each="person:${userList}">
+    <div th:switch="${person.name}">
+        <p th:case="'张三'">张三</p>
+        <p th:case="#{roles.manager}">普通管理员</p>
+        <p th:case="#{roles.superadmin}">超级管理员</p>
+    </div>
+</div>
+</body>
+</html>

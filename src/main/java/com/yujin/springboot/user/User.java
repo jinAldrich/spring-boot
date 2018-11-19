@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class User {
@@ -16,7 +18,7 @@ public class User {
     private String pwd;
 
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss a", locale = "zh", timezone = "GMT+8")
-    private Date brithday;
+    private Date birthday;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String desc;
@@ -25,11 +27,11 @@ public class User {
 
     }
 
-    public User(String _name, int _age, String _pwd, Date _brighday, String desc) {
+    public User(String _name, int _age, String _pwd, Date _birthday, String desc) {
         this.name = _name;
         this.age = _age;
         this.pwd = _pwd;
-        this.brithday = _brighday;
+        this.birthday = _birthday;
         this.desc = desc;
     }
 
@@ -57,13 +59,22 @@ public class User {
         this.pwd = pwd;
     }
 
-    public Date getBrithday() {
-        return brithday;
+    public Date getBirthday() {
+        return birthday;
     }
 
-    public void setBrithday(Date brithday) {
-        this.brithday = brithday;
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
+
+
+
+    public void setBirthday(String birthday) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = format.parse(birthday);
+        this.birthday = date;
+    }
+
 
     public String getDesc() {
         return desc;
@@ -71,5 +82,10 @@ public class User {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    @Override
+    public String toString() {
+        return "[" + this.name + " " + this.age + " " + this.birthday+  "]";
     }
 }
